@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A57C91C8-F9FA-432F-A882-E90E0DA3BA76}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{209C7CAA-7DC3-408E-B689-EF94107EC917}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CoolWaves", "src\CoolWaves\CoolWaves.xproj", "{15AF0334-2278-4EF1-8362-188EE47A3302}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{15AF0334-2278-4EF1-8362-188EE47A3302}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15AF0334-2278-4EF1-8362-188EE47A3302}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15AF0334-2278-4EF1-8362-188EE47A3302}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15AF0334-2278-4EF1-8362-188EE47A3302}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{15AF0334-2278-4EF1-8362-188EE47A3302} = {A57C91C8-F9FA-432F-A882-E90E0DA3BA76}
+	EndGlobalSection
+EndGlobal
