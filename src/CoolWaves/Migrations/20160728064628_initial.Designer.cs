@@ -5,15 +5,16 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using CoolWaves.Data;
 
-namespace CoolWaves.Data.Migrations
+namespace CoolWaves.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160728064628_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.0-rc2-20901")
+                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("CoolWaves.Models.ApplicationRole", b =>
@@ -75,8 +76,6 @@ namespace CoolWaves.Data.Migrations
 
                     b.Property<string>("SecurityStamp");
 
-                    b.Property<string>("Test");
-
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
@@ -88,6 +87,7 @@ namespace CoolWaves.Data.Migrations
                         .HasName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
+                        .IsUnique()
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUser","Security");
@@ -103,6 +103,9 @@ namespace CoolWaves.Data.Migrations
 
                     b.Property<string>("ClaimValue");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<int>("RoleId")
                         .HasColumnName("AspNetRoleId");
 
@@ -110,7 +113,9 @@ namespace CoolWaves.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaim","Security");
+                    b.ToTable("AspNetRoleClaims");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRoleClaim<int>");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<int>", b =>
@@ -123,6 +128,9 @@ namespace CoolWaves.Data.Migrations
 
                     b.Property<string>("ClaimValue");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<int>("UserId")
                         .HasColumnName("AspNetUserId");
 
@@ -130,7 +138,9 @@ namespace CoolWaves.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaim","Security");
+                    b.ToTable("AspNetUserClaims");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserClaim<int>");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<int>", b =>
@@ -138,6 +148,9 @@ namespace CoolWaves.Data.Migrations
                     b.Property<string>("LoginProvider");
 
                     b.Property<string>("ProviderKey");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -148,7 +161,9 @@ namespace CoolWaves.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogin","Security");
+                    b.ToTable("AspNetUserLogins");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserLogin<int>");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<int>", b =>
@@ -159,13 +174,18 @@ namespace CoolWaves.Data.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnName("AspNetRoleId");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserRole","Security");
+                    b.ToTable("AspNetUserRoles");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserRole<int>");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserToken<int>", b =>
@@ -177,17 +197,72 @@ namespace CoolWaves.Data.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<string>("Value");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
+                    b.ToTable("AspNetUserTokens");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserToken<int>");
+                });
+
+            modelBuilder.Entity("CoolWaves.Models.AspNetRoleClaim", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<int>");
+
+
+                    b.ToTable("AspNetRoleClaim","Security");
+
+                    b.HasDiscriminator().HasValue("AspNetRoleClaim");
+                });
+
+            modelBuilder.Entity("CoolWaves.Models.AspNetUserClaim", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<int>");
+
+
+                    b.ToTable("AspNetUserClaim","Security");
+
+                    b.HasDiscriminator().HasValue("AspNetUserClaim");
+                });
+
+            modelBuilder.Entity("CoolWaves.Models.AspNetUserLogin", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<int>");
+
+
+                    b.ToTable("AspNetUserLogin","Security");
+
+                    b.HasDiscriminator().HasValue("AspNetUserLogin");
+                });
+
+            modelBuilder.Entity("CoolWaves.Models.AspNetUserRole", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<int>");
+
+
+                    b.ToTable("AspNetUserRole","Security");
+
+                    b.HasDiscriminator().HasValue("AspNetUserRole");
+                });
+
+            modelBuilder.Entity("CoolWaves.Models.AspNetUserToken", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserToken<int>");
+
+
                     b.ToTable("AspNetUserToken","Security");
+
+                    b.HasDiscriminator().HasValue("AspNetUserToken");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("CoolWaves.Models.ApplicationRole")
-                        .WithMany()
+                        .WithMany("Claims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -195,7 +270,7 @@ namespace CoolWaves.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<int>", b =>
                 {
                     b.HasOne("CoolWaves.Models.ApplicationUser")
-                        .WithMany()
+                        .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -203,7 +278,7 @@ namespace CoolWaves.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<int>", b =>
                 {
                     b.HasOne("CoolWaves.Models.ApplicationUser")
-                        .WithMany()
+                        .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -211,12 +286,12 @@ namespace CoolWaves.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<int>", b =>
                 {
                     b.HasOne("CoolWaves.Models.ApplicationRole")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CoolWaves.Models.ApplicationUser")
-                        .WithMany()
+                        .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

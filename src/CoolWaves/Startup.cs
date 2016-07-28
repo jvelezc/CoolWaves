@@ -49,8 +49,10 @@ namespace CoolWaves
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext, int>()
+                .AddUserStore<CustomUserStore>()
+                .AddRoleStore<CustomRoleStore>()
                 .AddDefaultTokenProviders();
-
+            
             services.AddMvc();
 
             // Add application services.
