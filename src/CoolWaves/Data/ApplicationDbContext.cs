@@ -13,7 +13,6 @@ namespace CoolWaves.Data
 
         public DbSet<AspNetUserClaim> AspNetUserClaim { get; set; }
         public DbSet<AspNetUserLogin> AspNetUserLogin { get; set; }
-        public DbSet<AspNetUserRole> AspNetUserRole { get; set; }
         public DbSet<AspNetRoleClaim> AspNetRoleClaim { get; set; }
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<ApplicationRole> ApplicationRole { get; set; }
@@ -25,8 +24,8 @@ namespace CoolWaves.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
 
+            base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
@@ -44,7 +43,7 @@ namespace CoolWaves.Data
 
             });
 
-            builder.Entity<AspNetUserClaim>(entity =>
+            builder.Entity<IdentityUserClaim<int>>(entity =>
             {
                 entity.ToTable("AspNetUserClaim", "Security");
                 entity.Property(e => e.UserId).HasColumnName("AspNetUserId");
@@ -52,21 +51,21 @@ namespace CoolWaves.Data
               
             });
 
-            builder.Entity<AspNetUserLogin>(entity =>
+            builder.Entity<IdentityUserLogin<int>>(entity =>
             {
                 entity.ToTable("AspNetUserLogin", "Security");
                 entity.Property(e => e.UserId).HasColumnName("AspNetUserId");
               
             });
 
-            builder.Entity<AspNetRoleClaim>(entity =>
+            builder.Entity<IdentityRoleClaim<int>>(entity =>
             {
                 entity.ToTable("AspNetRoleClaim", "Security");
                 entity.Property(e => e.Id).HasColumnName("AspNetRoleClaimId");
                 entity.Property(e => e.RoleId).HasColumnName("AspNetRoleId");
             });
 
-            builder.Entity<AspNetUserRole>(entity =>
+            builder.Entity<IdentityUserRole<int>>(entity =>
             {
                 entity.ToTable("AspNetUserRole", "Security");
                 entity.Property(e => e.UserId).HasColumnName("AspNetUserId");
@@ -75,7 +74,7 @@ namespace CoolWaves.Data
             });
 
 
-            builder.Entity<AspNetUserToken>(entity =>
+            builder.Entity<IdentityUserToken<int>>(entity =>
             {
 
                 entity.ToTable("AspNetUserToken", "Security");
@@ -83,7 +82,7 @@ namespace CoolWaves.Data
                 
             });
 
-          
+
 
         }
     }

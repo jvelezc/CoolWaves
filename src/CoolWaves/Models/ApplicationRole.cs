@@ -15,6 +15,5 @@ namespace CoolWaves.Models
         {
             this.Name = name;
         }
-        public string ShowingItsPossible { get; set; }
     }
 }
